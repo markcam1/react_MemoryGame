@@ -1,19 +1,31 @@
 import React from 'react';
-import "./Card.css";
+
+const cardStyle = {
+	margin: '0.7rem',
+	borderRadius:' 0.2rem',
+	position: 'relative',
+	width: '25%',
+	lineHeight: '1.8', 
+}
+const imgContStyle = {
+	height: '100%', 
+	width: '100%', 
+	textAlign: 'center',
+	overflow: 'hidden',
+}
+const imgStyle = {
+	width: '70%',
+}
 
 const Card = props => (
-	<div 
-		className="cardStyle"
-		onClick={() => props.setClicked(props.id)}>
-	    <div className="imgContainer">
-	      <img
+	<div style={cardStyle}
+		className="card"
+		onClick={() => props.handleBtnClick(props.id)}>
+	    <div style={imgContStyle} className="imgBox">
+	      <img style={imgStyle}
 	      	className="img"
-	        alt={props.name}
 	        src={props.image}
 	      />
-	    </div>
-	    <div className="content">	
-	    	{props.name}
 	    </div>
   </div>
 );

@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import Wrapper from "./components/Wrapper";
 import Card from './components/Card';
-// import Characters from './characters.json';
-import './App.css';
+import Wrapper from "./components/Wrapper";
 
-let Score = 0;
 let guessesCorrect = 0;
-let message = "";
+let scoreboard = "";
 
-const Characters = [
+const Rorschachs = [
 	{
 	  "id": 1,
 	  "image": "./images/rorschach1.jpg",
@@ -31,115 +28,107 @@ const Characters = [
 	},
 	{
 	  "id": 5,
-	  "image": "./images/sheik.png",
+	  "image": "./images/rorschach5.jpg",
 	  "clicked": false
 	},
 	{
 	  "id": 6,
-	  "image": "./images/malon.png",
+	  "image": "./images/rorschach6.jpg",
 	  "clicked": false
 	},
 	{
 	  "id": 7,
-	  "image": "./images/ruto.png",
+	  "image": "./images/rorschach7.jpg",
 	  "clicked": false
 	},
 	{
 	  "id": 8,
-	  "image": "./images/nabooru.png",
+	  "image": "./images/rorschach8.jpg",
 	  "clicked": false
 	},
 	{
 	  "id": 9,
-	  "image": "./images/impa.png",
+	  "image": "./images/rorschach9.jpg",
 	  "clicked": false
 	},
 	{
 	  "id": 10,
-	  "image": "./images/Darunia.png",
+	  "image": "./images/rorschach10.jpg",
 	  "clicked": false
 	},
 	{
 	  "id": 11,
-	  "image": "./images/navi.png",
+	  "image": "./images/rorschach11.jpg",
 	  "clicked": false
 	},
 	{
 	  "id": 12,
-	  "image": "./images/Saria_real.png",
+	  "image": "./images/rorschach12.jpg",
 	  "clicked": false
 	}
-  ]
+	]
+
+	const wrapperStyle = {
+		height: '100px',
+		position: 'relative',
+		width: '50%', 
+		margin: '0 0 0 5%',
+	}
 
 class App extends Component {
 
 	state = {
-		Characters,
-		Score,
+		Rorschachs,
 		guessesCorrect,
-		message
+		scoreboard
 	};
 
-	setClicked = id => {
-		const Characters = this.state.Characters;
-		const cardClicked = Characters.filter(Character => Character.id === id);
+	handleBtnClick = id => {
+		const Rorschachs = this.state.Rorschachs;
+		const clickDone = Rorschachs.filter(Rorschach => Rorschach.id === id);
+		clickDone[0].clicked ? this.loserHandler() : (this.winnerHandler(), clickDone[0].clicked = true)
+	};
 
-		if (cardClicked[0].clicked) {
-
-			guessesCorrect = 0;
-			message = 'Fail';
-
-			for (let i = 0; i < Characters.length; i++) {
-				Characters[i].clicked = false;
-			}
-
-			this.setState({message});
-			this.setState({guessesCorrect});
-			this.setState({Characters});
-
-		} else {
-			cardClicked[0].clicked = true;
-
-			guessesCorrect = guessesCorrect + 1;
-			message = "Keep Going"
-
-			if (guessesCorrect > Score) {
-				Score = guessesCorrect;
-				this.setState({Score});
-			}
-
-			Characters.sort((a, b) => {
-				return 0.5 - Math.random();
-			});
-
-			this.setState({Characters});
-			this.setState({guessesCorrect});
-			this.setState({message});
+	loserHandler() {
+		guessesCorrect = 0;
+		scoreboard = 'Failed Miserably. \nClick an Image to restart';
+		for (let i = 0; i < Rorschachs.length; i++) {
+			Rorschachs[i].clicked = false;
 		}
-	};
+		this.setState({scoreboard});
+		this.setState({guessesCorrect});
+		this.setState({Rorschachs});
+	}
 
+	winnerHandler(){
+		
+		guessesCorrect = guessesCorrect + 1;
+		scoreboard = 'Keep Going';
+
+		Rorschachs.sort((a, b) => {
+			return 1 - Math.random();
+		});
+
+		this.setState({Rorschachs});
+		this.setState({guessesCorrect});
+		this.setState({scoreboard});
+
+	}
 
     render() {
-
         return ( 
         	<Wrapper>
-    			<div className="hero">
-    				<div className="heroText">
-        				<h3 className="message">{this.state.message}</h3>
-        				<h3 className="message">{this.state.guessesCorrect}</h3>
-    				</div>
-    				<div className="buttonWrapper">
-    					<img className="buttons" src="images/buttons.png" alt="mc buttons" />
-    				</div>
+    			<div style={wrapperStyle} className="box">
+        				<h3 className="scoreboard">{this.state.scoreboard}</h3>
+        				<h3 className="scoreboard">{this.state.guessesCorrect}</h3>
     			</div>
             	<div className="row">
-            		{this.state.Characters.map(Character => (
+            		{this.state.Rorschachs.map(Rorschach => (
             			<Card
-            				setClicked={this.setClicked}
-            				id={Character.id}
-            				key={Character.id}
-            				image={Character.image}
-            				className="col-sm-1"
+            				handleBtnClick={this.handleBtnClick}
+            				image={Rorschach.image}
+            				id={Rorschach.id}
+            				key={Rorschach.id}
             			/>
             		))}
             	</div>
