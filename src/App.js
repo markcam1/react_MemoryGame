@@ -44,7 +44,6 @@ class App extends Component {
 		this.setState({scoreboard});
 	}
 
-
 	handleBtnClick = id => {
 		const Rorschachs = this.state.Rorschachs;
 		const clickDone = Rorschachs.filter(Rorschach => Rorschach.id === id);
@@ -63,7 +62,6 @@ class App extends Component {
 	}
 
 	winnerHandler(){
-
 		if (goodPick < 11){
 			goodPick = goodPick + 1;
 			scoreboard = 'Keep Going';
@@ -84,9 +82,6 @@ class App extends Component {
 			this.setState({goodPick});
 			this.setState({Rorschachs});
 		}
-		
-
-
 	}
 
     render() {

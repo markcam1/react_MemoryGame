@@ -1,12 +1,12 @@
 import React from 'react';
 
 const cardStyle = {
-	margin: '0.7rem',
-	borderRadius:' 0.2rem',
+	margin: '1%',
 	position: 'relative',
 	width: '25%',
 	lineHeight: '1.8', 
 }
+
 const imgContStyle = {
 	height: '100%', 
 	width: '100%', 
